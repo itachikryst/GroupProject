@@ -1,0 +1,11 @@
+body{
+  background-color: #202020;
+  color: white;
+}
+.output{
+  background-color: white;
+  color: black;
+  height: 150px;
+  width: 400px;
+  margin: 15px;
+}
