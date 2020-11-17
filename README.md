@@ -1,2 +1,2 @@
 # GroupProject
-Group Project by Kacper Śliwa and Krystian Stiewe
+Group Project by Kacper and Krystian
