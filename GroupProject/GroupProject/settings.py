@@ -25,7 +25,7 @@ SECRET_KEY = '62mb)4j7&gp!bobx$bf1p58ju1g$8&me2pk7oe+nf@e8**&o$t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["itachikryst.pythonanywhere.com"]
+ALLOWED_HOSTS = ["itachikryst.pythonanywhere.com", "127.0.0.1"]
 
 # Application definition
 
@@ -83,6 +83,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'client.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

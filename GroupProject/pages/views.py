@@ -1,31 +1,69 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
-
-from .models import *
-from .forms import loginForm
-from .forms import registerForm
+from django.shortcuts import render,redirect
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from client.models import User
+from .forms import RegistrationForm
 
 
 
-def homepage_view(request, *args, **kwargs):
-    return render(request, "index.html")
+def homepageView(request, *args, **kwargs):
+    context = {}
+    return render(request, "index.html", context)
 
-def loginPage(request):
-    form = loginForm()
-    if request.method == 'POST':
-        form = loginForm(request.POST)
+
+def loginPageView(request, *args, **kwargs):
+    logout(request)
+    if request.POST:
+        print("test1")
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            print("test")
+            return redirect("home")
+
+    else:
+        print("test2")
+        form = AuthenticationForm()
+    print("test3")
+    context = {'form': form}
+    return render(request, "login.html", context)
+
+
+def registerPageView(request, *args, **kwargs):
+    context = {}
+    if request.POST:
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-    context = {'form':form}
-    return render(request, "login.html",context)
+            return redirect("login")
+        else:
 
-def registerPage(request):
-    registerForms = registerForm()
-    if request.method == 'POST':
-        registerForms = loginForm(request.POST)
-        if registerForms.is_valid():
-            registerForms.save()
-    context = {'form': registerForms}
-    return render(request, "register.html",context)
+            context["registration_form"] = form
+    else:
+
+        form = RegistrationForm()
+        context["registration_form"] = form
+
+
+    return render(request, "register.html", context)
+
+
+def managerOrdersView(request, *args, **kwargs):
+    context = {}
+    return render(request, "manager-orders.html", context)
+
+
+def userOrdersView(request, *args, **kwargs):
+    context = {}
+    return render(request, "user-orders.html", context)
+
+
+def userSearchView(request, *args, **kwargs):
+    context = {}
+    return render(request, "user-search.html", context)
+
+
+def workerOrdersView(request, *args, **kwargs):
+    context = {}
+    return render(request, "worker-orders.html", context)

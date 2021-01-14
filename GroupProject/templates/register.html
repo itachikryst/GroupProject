@@ -1,37 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3><center>register</center></h3>
-<br>
-<div class="loginForm">
-<div class="mx-auto col-4">
-<form method="post">
-  {% csrf_token %}
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Typ konta</label>
-    {{registerForm.accountType}}
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Nazwa użytkownika</label>
-    {{registerForm.userName}}
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Imię</label>
-    {{registerForm.name}}
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Nazwisko</label>
-    {{registerForm.surname}}
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">E-mail</label>
-    {{registerForm.email}}
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Numer telefonu</label>
-    {{registerForm.password}}
-  </div>
-  <button type="submit" class="btn btn-primary">Zarejestruj</button>
-</form>
-</div>
-</div>
+
+    <div class="container-fluid bg">
+        <div class="row justify-content-center">
+          <div class="col-12 col-sm-6 col-md-3">
+            <form method="POST" class="form-container">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="exampleFormControlSelect1">Typ konta</label>
+
+                  {{  registration_form.type }}
+
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nazwa użytkownika</label>
+                <div class="form-control">{{ registration_form.username }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Imię</label>
+                <div class="form-control">{{ registration_form.first_name }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nazwisko</label>
+                <div class="form-control">{{ registration_form.last_name }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <div class="form-control">{{ registration_form.email }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Hasło</label>
+                <div class="form-control">{{ registration_form.password1 }}</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Powtórz hasło</label>
+                <div class="form-control">{{ registration_form.password2 }}</div>
+              </div>
+              <button type="submit" class="btn btn-primary">Zarejestruj</button>
+            </form>
+          </div>
+        </div>
+    </div>
+
 {% endblock %}
