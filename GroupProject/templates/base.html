@@ -21,7 +21,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
               </li>
-              {% if not request.user.is_authenticated %}
+              {% if not user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="/login">Zaloguj</a>
               </li>
@@ -31,18 +31,25 @@
 
               {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="/login">Wyloguj użytkownika {{ request.user }}</a>
+                <a class="nav-link" href="/login">Wyloguj użytkownika {{ user }}</a>
               </li>
-              {% endif %}
+              {% if userType == "Użytkownik" %}
               <li class="nav-item">
                 <a class="nav-link" href="/usersearch">Użytkownik</a>
               </li>
+              {% endif %}
+              {% if userType == "Pracownik" %}
               <li class="nav-item">
                 <a class="nav-link" href="/workerorders">Pracownik</a>
               </li>
+              {% endif %}
+              {% if userType == "Kierownik" %}
               <li class="nav-item">
                 <a class="nav-link" href="/managerorders">Kierownik</a>
               </li>
+              {% endif %}
+              {% endif %}
+
             </ul>
 
           </div>
