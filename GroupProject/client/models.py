@@ -1,7 +1,11 @@
+from builtins import super
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+from workshop.models import Workshop
 
 
 class User(AbstractUser):
@@ -13,7 +17,7 @@ class User(AbstractUser):
 
     type = models.CharField(_("Type"), max_length=50,
                             choices=Types.choices, default=Types.KLIENT)
-
+    WORKSHOP = models.ForeignKey(Workshop, on_delete=models.PROTECT, null=True)
     # name = models.CharField(_("Name of User"), blank=True, max_length=255)
     # username = models.CharField(_("Username of a User"), blank=True,
     #                             max_length=255)

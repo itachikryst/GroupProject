@@ -17,62 +17,72 @@
 
       <!-- lista warsztatów -->
       <h2>Lista zleceń</h2>
-    {% for order, orderId in orders %}
+    {% for order, orderstatusform, id in orders %}
       <div class="card">
-  <div class="card-header">
-  {{ order.NAME }}
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-lg-8">
-      {{ order.DESC }}
-      </div>
-      <div class="col-lg-2">
-        <label for="exampleFormControlSelect1">Status</label>
-        <select class="form-control">
-          <option>Zlecone</option>
-          <option>W trakcie</option>
-          <option>Gotowe</option>
-        </select>
-      </br>
-        <button type="button" name="button">Zapisz status</button>
-      </br></br>
-
-        <!-- przycisk zgłoś kierownikowui problem-->
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Zgłoś problem</button>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Zgłoś problem warsztatowi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="card-header">
+        {{ order.NAME }}
+        </div>
+        <div class="card-body">
+          <!-- podzielona na kolumny treść karty -->
+          <!-- podzielona na kolumny treść karty -->
+          <div class="row">
+            <div class="col-lg-8">
+            {{ order.DESC }}
+            </div>
+            <div class="col-lg-2">
+              <label for="exampleFormControlSelect1">Przypisz pracowników:</label>
+              <select class="selectpicker" multiple data-live-search="true">
+                <option>Jan Kowalski</option>
+                <option>Zbigniew Stonoga</option>
+                <option>Wiesław Szlachetny</option>
+              </select>
+            </br></br>
+              <button type="button" name="button">Dodaj pracownikow do zlecenia</button>
+            </br></br>
+              <form method="POST">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <div class="form-control">{{ orderstatusform.STATUS }}</div>
               </div>
-              <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                    <label for="message-text" class="col-form-label">Wiadomość:</label>
-                    <textarea class="form-control" id="message-text"></textarea>
+              <button value="{{ id }}" type="submit" class="btn btn-primary">Zapisz status</button>
+            </form>
+
+              <!-- przycisk zgłoś kierownikowui problem-->
+
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Zgłoś problem</button>
+
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Zgłoś problem kierownikowi</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Wiadomość:</label>
+                          <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                      <button type="button" class="btn btn-primary">Wyślij zgłoszenie</button>
+                    </div>
                   </div>
-                </form>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Wyślij zgłoszenie</button>
-              </div>
+
+              <!-- koniec przycisk zgłoś kierownikowui problem-->
+
             </div>
           </div>
-        </div>
-
-        <!-- koniec przycisk zgłoś kierownikowui problem-->
 
       </div>
-    </div>
-  </div>
-</div>
     {% endfor %}
   </div>
 </div>

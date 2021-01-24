@@ -1,9 +1,11 @@
+from builtins import enumerate, list
+
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from client.models import User, Klient
 from workshop.models import Order, Workshop
-from .forms import RegistrationForm
+from .forms import RegistrationForm, OrderStatusForm
 
 
 
@@ -68,13 +70,32 @@ def registerPageView(request, *args, **kwargs):
 
 
 def managerOrdersView(request, *args, **kwargs):
+    context = {}
     if request.user.is_authenticated:
-        orders = list(Order.objects.all())
+        try:
+            orders = list(Order.objects.all())
+        except:
+            orders = []
+        # is_not_saved = True
         for id, order in enumerate(orders):
-            orders[id] = (order, id)
-        # print(orders)
+            if request.POST:
+                form = OrderStatusForm(request.POST, instance=order)
+                if form.is_valid():
+                    form.save()
+                    print(request.POST)
+                    print("ZASEJWOWANE")
+                else:
+                    print("Przypisany form1")
+            else:
+                form = OrderStatusForm(instance=order)
+                print("Przypisany form2")
+            orders[id] = (order, form, id)
+            print(orders)
+        print("Context:")
         context = {"user": request.user, "userType": request.user.type,
                    "orders": orders}
+        print(context)
+        return render(request, "manager-orders.html", context)
     else:
         context = {}
     return render(request, "manager-orders.html", context)
